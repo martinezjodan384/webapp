@@ -1,10 +1,14 @@
 <template>
   <div>
-    <router-link to="/countries-create">Agregar</router-link>
+    <div v-if="!loading">
+      <i class="fa fa-spinner fa-spin fa-5x fa-fw"></i>
+      <span class="sr-only">Loading...</span>
+    </div>
+    <br/>
+    <router-link to="/countries-create" class="btn btn-success">Agregar</router-link>
     <center><ul id="country-list" v-if="countries != null">
     <div v-for="(country, key) in countries" :key="key" id="country">
-        {{country.name}}
-        {{country.id}}
+        <h4>{{country.name}}</h4>
         <p><router-link :to="{name: 'CountriesDetails', params: {id: country.id}}" class="btn btn-secondary">Ver</router-link> |
           <router-link :to="{name: 'CountriesEdit', params: {id: country.id}}" class="btn btn-dark">Editar</router-link> |
           <a @click="countryDelete(country.id)" class="btn btn-light">Eliminar</a>
@@ -42,7 +46,8 @@ export default {
     return {
       countries: [],
       countryId: null,
-      showModal: false
+      showModal: false,
+      loading: false
     }
   },
   methods: {
@@ -50,6 +55,7 @@ export default {
       axios.get('https://exam.genial.gt/api/countries')
         .then(response => {
           this.countries = response.data.data
+          this.loading = true
         })
         .catch(error => {
           throw error
@@ -75,10 +81,19 @@ export default {
     closeModal: function () {
       this.showModal = false
       this.countryId = null
+    },
+    getCookie: function () {
+      return this.$cookie.get('data')
+    },
+    validateSession: function () {
+      if (!this.getCookie()) {
+        return this.$router.push('/login')
+      }
     }
   },
   mounted: function () {
     this.getCountries()
+    this.validateSession()
   }
 }
 </script>
@@ -90,12 +105,11 @@ export default {
         position: center;
         margin-top:10px;
         width:30%;
-        height:90px;
+        height:10%;
         border:1px solid #ddd;
         background:#eee;
         padding:20px;
         overflow:hiden;
-
       }
   }
   .enable-modal{

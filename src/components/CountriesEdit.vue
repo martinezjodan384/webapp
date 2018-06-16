@@ -1,22 +1,24 @@
 <template>
-  <div>
-    <form @submit.prevent="setCountryEdit">
-      <div>
-        <label>Nombre</label>
-        <input type="text" v-model="name">
-      </div>
-      <div>
-        <label>Alpha2</label>
-        <input type="text" v-model="alpha2">
-      </div>
-       <div>
-        <label>Alpha3</label>
-        <input type="text" v-model="alpha3">
-      </div>
-      <div>
-        <input type="submit">
-      </div>
-    </form>
+  <div class="container">
+    <div class="row">
+      <form @submit.prevent="setCountryEdit">
+        <div class="col">
+          <label>Nombre</label>
+          <input type="text" v-model="name">
+        </div>
+        <div class="col">
+          <label>Alpha2</label>
+          <input type="text" v-model="alpha2">
+        </div>
+         <div class="col">
+          <label>Alpha3</label>
+          <input type="text" v-model="alpha3">
+        </div>
+        <div class="col">
+          <input type="submit">
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 <script>
@@ -27,7 +29,8 @@ export default {
     return {
       name: null,
       alpha2: null,
-      alpha3: null
+      alpha3: null,
+      iso: null
     }
   },
   methods: {
@@ -35,7 +38,8 @@ export default {
       const data = {
         name: this.name,
         alpha2: this.alpha2,
-        alpha3: this.alpha3
+        alpha3: this.alpha3,
+        iso_3166_2: this.iso
       }
 
       axios.post('https://exam.genial.gt/api/countries', data)
@@ -45,7 +49,18 @@ export default {
         .catch((error) => {
           throw error
         })
+    },
+    getCookie: function () {
+      return this.$cookie.get('data')
+    },
+    validateSession: function () {
+      if (!this.getCookie()) {
+        return this.$router.push('/login')
+      }
     }
+  },
+  mounted: function () {
+    this.validateSession()
   }
 }
 </script>
