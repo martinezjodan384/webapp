@@ -1,5 +1,5 @@
 PRIMER PASO:
-Descargar el proyecto en con el comando github: https://github.com/martinezjodan384/webapp
+Descargar el proyecto en con el comando: git clone https://github.com/martinezjodan384/webapp
 
 SEGUNDO PASO:
 Entrar en la carpeta del proyecto e instalar dependencias con npm: npm install
