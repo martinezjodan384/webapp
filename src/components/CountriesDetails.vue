@@ -63,6 +63,7 @@
           </tr>
         </tbody>
       </table>
+      <br>
       <div class="modal fade show" :class="{'enable-modal': showModal === true, 'disable-modal': showModal === false}">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -83,6 +84,7 @@
         </div>
       </div>
     </div>
+    <br>
   </div>
 </template>
 <script>
