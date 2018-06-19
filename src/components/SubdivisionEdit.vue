@@ -1,20 +1,33 @@
 <template>
-  <div>
-    <form @submit.prevent="setSubdivisionEdit">
-      <p>
-        <strong>Nombre: </strong>
-        <input type="text" v-model="name">
-      </p>
-      <p>
-        <strong>Codigo: </strong>
-        <input type="text" v-model="code">
-      </p>
-      <button class="btn btn-primary">Actualizar</button>
-      <button type="button" class="btn btn-success" @click="cancel">Cancelar</button>
-    </form>
+  <div class="container">
+    <br>
+    <br>
+    <div class="color">
+      <br>
+      <form @submit.prevent="setSubdivisionEdit">
+        <p>
+          <strong>Nombre: </strong>
+          <input type="text" v-model.trim="name" class="form-control col-8 offset-2" name="name"
+                 :class="{'is-invalid': $v.name.$error,
+                 'is-valid': !$v.name.$invalid && $v.name.$dirty}"
+                 @input="$v.name.$touch()">
+          <p class="invalid-feedback">Ingrese un nombre valido</p>
+        <p>
+          <strong>Codigo: </strong>
+          <input type="text" v-model.trim="code" class="form-control col-8 offset-2" name="code"
+                 :class="{'is-invalid': $v.code.$error,
+                 'is-valid': !$v.name.$invalid && $v.code.$dirty}"
+                 @input="$v.code.$touch()">
+        <p class="invalid-feedback">Ingrese un codigo valido</p>
+        <button class="btn btn-secondary">Actualizar</button>
+        <button type="button" class="btn btn-dark" @click="cancel">Cancelar</button>
+      </form>
+      <br>
+    </div>
   </div>
 </template>
 <script>
+import required from 'vuelidate/lib/validators/required'
 import axios from 'axios'
 export default {
   name: 'subdivision-edit',
@@ -23,6 +36,14 @@ export default {
       name: null,
       code: null,
       url: 'https://exam.genial.gt/api/countries/'
+    }
+  },
+  validations: {
+    name: {
+      required
+    },
+    code: {
+      required
     }
   },
   methods: {
@@ -77,4 +98,8 @@ export default {
   }
 }
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+  .color{
+    background-color:#D1DBBD;
+  }
+</style>

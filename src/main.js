@@ -6,9 +6,11 @@ import router from './router'
 import '@/assets/scss/templates/templates.scss'
 import '../node_modules/font-awesome/scss/font-awesome.scss'
 import VueCookie from 'vue-cookie'
+import Vuelidate from 'vuelidate'
 
 Vue.config.productionTip = false
 Vue.use(VueCookie)
+Vue.use(Vuelidate)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

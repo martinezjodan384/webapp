@@ -3,11 +3,18 @@
       <form @submit.prevent="login()">
         <div class="form-group col size">
           <label>Ingrese Email</label>
-          <input type="email" class="form-control" v-model="email" placeholder="juanjo@example.com">
+          <input type="email" class="form-control" v-model.trim="email" placeholder="juanjo@example.com" name="email"
+                 :class="{'is-invalid': $v.email.$error || !$v.email.email,
+                 'is-valid': !$v.email.$invalid && $v.email.$dirty}"
+                 @input="$v.email.$touch()">
+          <p class="invalid-feedback">Ingrese un Email</p>
         </div>
         <div class="form-group col size">
           <label>Contraseña</label>
-          <input type="password" class="form-control" v-model="pass" placeholder="Contraseña">
+          <input type="password" class="form-control" v-model="pass" placeholder="Contraseña" name="pass"
+                 :class="{'is-invalid': $v.pass.$error, 'is-valid': !$v.pass.$invalid && $v.pass.$dirty}"
+                 @input="$v.pass.$touch()">
+          <p class="invalid-feedback">Ingrese una conraseña</p>
         </div>
         <button class="btn btn-primary button">Submit</button>
         <p v-if="showAlert">{{message}}</p>
@@ -15,6 +22,8 @@
   </div>
 </template>
 <script>
+import required from 'vuelidate/lib/validators/required'
+import email from 'vuelidate/lib/validators/email'
 export default {
   name: 'login',
   data: function () {
@@ -23,6 +32,15 @@ export default {
       pass: null,
       showAlert: false,
       message: null
+    }
+  },
+  validations: {
+    email: {
+      email,
+      required
+    },
+    pass: {
+      required
     }
   },
   methods: {

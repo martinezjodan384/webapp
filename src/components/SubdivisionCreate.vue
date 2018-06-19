@@ -7,19 +7,26 @@
       <form @submit.prevent="setSubdivision">
         <p>
         <strong>Nombre: </strong>
-        <input type="text" v-model="name">
-        </p>
+        <input type="text" v-model.trim="name" name="name" class="form-control col-8 offset-2"
+               :class="{'is-invalid': $v.name.$error,
+               'is-valid': !$v.name.$invalid && $v.name.$dirty}"
+               @input="$v.name.$touch()" placeholder="Ingrese el nombre de la sub-división">
+        <p class="invalid-feedback">Ingrese un nombre</p>
         <p>
         <strong>Codigo: </strong>
-        <input type="text" v-model="code">
-        </p>
-        <button class="btn btn-primary">Agregar</button>
-        <button type="button" class="btn btn-success" @click="cancel">Cancelar</button>
+        <input type="text" v-model.trim="code" name="code" class="form-control col-8 offset-2"
+               :class="{'is-invalid': $v.code.$error,
+               'is-valid': !$v.code.$invalid && $v.code.$dirty}"
+               @input="$v.code.$touch()" placeholder="Ingrese el codigo de la sub-división">
+          <p class="invalid-feedback">Ingrese un codigo valido</p>
+        <button class="btn btn-secondary">Agregar</button>
+        <button type="button" class="btn btn-dark" @click="cancel">Cancelar</button>
       </form>
     </div>
   </div>
 </template>
 <script>
+import required from 'vuelidate/lib/validators/required'
 import axios from 'axios'
 export default {
   name: 'subdivision-create',
@@ -27,6 +34,14 @@ export default {
     return {
       name: null,
       code: null
+    }
+  },
+  validations: {
+    name: {
+      required
+    },
+    code: {
+      required
     }
   },
   methods: {
@@ -40,7 +55,7 @@ export default {
     },
     setSubdivision: function () {
       if (!this.name) {
-        return false
+        this.$v.$touch()
       } else if ((!this.name) && this.name.length === 0) {
         return false
       }

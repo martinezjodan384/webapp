@@ -1,77 +1,84 @@
 <template>
   <div class="container">
-    <h2>{{text}} {{name}}</h2>
-      <div v-if="!loading">
-        <i class="fa fa-spinner fa-spin fa-5x fa-fw"></i>
-        <span class="sr-only">Loading...</span>
-      </div>
-      <div class="row" v-if="loading">
-        <div class="col align-self-center">
-          <p>
-            <strong>Nombre:</strong> {{name}}
-          </p>
-          <p>
-            <strong>Alpha2:</strong> {{alpha2}}
-          </p>
-          <p>
-            <strong>Alpha3:</strong> {{alpha3}}
-          </p>
-          <p>
-            <strong>Iso:</strong> {{iso}}
-          </p>
-          <router-link to="/countries" class="btn btn-primary">Regresar</router-link>
+    <br>
+    <br>
+    <div class="color">
+      <h2>{{text}} {{name}}</h2>
+        <div v-if="!loading">
+          <i class="fa fa-spinner fa-spin fa-5x fa-fw"></i>
+          <span class="sr-only">Loading...</span>
         </div>
-    </div>
-    <hr/>
-    <button type="button" class="btn btn-secondary" @click="openForm()">Agregar subdivision</button>
-    <FormSubdivision v-if="showForm" @cancel="closeForm" @create="createSubdivision"/>
-    <br/>
-    <table>
-      <thead>
-        <th>Nombre</th>
-        <th>Codigo</th>
-        <th>Accion</th>
-      </thead>
-      <tbody v-for="(subdivision, key) in subdivisions" :key="key">
-        <tr>
-          <td>{{subdivision.name}}</td>
-          <td>{{subdivision.code}}</td>
-          <td>
-            <button type="button" class="btn btn-danger btn-sm" @click="openModal(subdivision.id)"><i class="fa fa-ban"></i></button>
-            <button type="button" @click="openEdit(subdivision.id)" class="btn btn-dark btn-sm"><i class="fa fa-pencil"></i></button>
-          </td>
-        </tr>
-        <tr v-if="subdivision.id === editId">
-          <td>
-            <label>Nombre: </label>
-            <input type="text" class="form-control">
-          </td>
-          <td>
-            <label>Codigo: </label>
-            <input type="text" class="form-control">
-          </td>
-          <td>
-            <button type="button" class="btn btn-secondary btn-sm">Cancelar</button>
-            <button type="button" class="btn btn-primary btn-sm">Agregar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="modal fade show" :class="{'enable-modal': showModal === true, 'disable-modal': showModal === false}">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Eliminar</h5>
-            <button type="button" class="close" @click="closeModal">
-              <span>&times;</span>
-            </button>
+        <div class="row" v-if="loading">
+          <div class="col align-self-center">
+            <p>
+              <strong>Nombre:</strong> {{name}}
+            </p>
+            <p>
+              <strong>Alpha2:</strong> {{alpha2}}
+            </p>
+            <p>
+              <strong>Alpha3:</strong> {{alpha3}}
+            </p>
+            <p>
+              <strong>Iso:</strong> {{iso}}
+            </p>
+            <router-link to="/countries" class="btn btn-dark">Regresar</router-link>
           </div>
-          <div class="modal-body">
-            Esta seguro que deseea eliminar esta sub-división
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="closeModal">Cancelar</button>
-            <button type="button" class="btn btn-primary" @click="deleteItem()">Aceptar</button>
+      </div>
+      <hr/>
+      <button type="button" class="btn btn-secondary" @click="openForm()">Agregar subdivision</button>
+      <FormSubdivision v-if="showForm" @cancel="closeForm" @create="createSubdivision"/>
+      <br/>
+      <br/>
+      <table class="container">
+        <thead class="row">
+          <th class="col-4">Nombre</th>
+          <th class="col-4">Codigo</th>
+          <th class="col-4">Accion</th>
+        </thead>
+        <tbody v-for="(subdivision, key) in subdivisions" :key="key">
+          <tr class="row">
+            <td class="col-4">{{subdivision.name}}</td>
+            <td class="col-4">{{subdivision.code}}</td>
+            <td class="col-4">
+              <button type="button" class="btn btn-danger btn-sm" @click="openModal(subdivision.id)"><i class="fa fa-ban"></i></button>
+              <button type="button" @click="openEdit(subdivision.id)" class="btn btn-dark btn-sm"><i class="fa fa-pencil"></i></button>
+              <br>
+              <br>
+            </td>
+          </tr>
+          <tr v-if="subdivision.id === editId">
+            <td>
+              <label>Nombre: </label>
+              <input type="text" class="form-control">
+            </td>
+            <td>
+              <label>Codigo: </label>
+              <input type="text" class="form-control">
+            </td>
+            <td>
+              <button type="button" class="btn btn-dark">Cancelar</button>
+              <button type="button" class="btn btn-secondary">Agregar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="modal fade show" :class="{'enable-modal': showModal === true, 'disable-modal': showModal === false}">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Eliminar</h5>
+              <button type="button" class="close" @click="closeModal">
+                <span>&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Esta seguro que deseea eliminar esta sub-división
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-dark" @click="closeModal">Cancelar</button>
+              <button type="button" class="btn btn-secondary" @click="deleteItem()">Aceptar</button>
+            </div>
           </div>
         </div>
       </div>
@@ -187,5 +194,8 @@ export default {
   }
   .disable-modal {
     display: none !important;
+  }
+  .color {
+    background-color: #D1DBBD;
   }
 </style>

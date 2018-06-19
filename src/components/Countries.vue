@@ -1,11 +1,14 @@
 <template>
   <div>
+    <div class="col-8 offset-2">
+    <img src="./../assets/scss/planeta.png" class="card-img-top size">
+    </div>
     <div v-if="!loading">
       <i class="fa fa-spinner fa-spin fa-5x fa-fw"></i>
       <span class="sr-only">Loading...</span>
     </div>
     <br/>
-    <router-link to="/countries-create" class="btn btn-success">Agregar</router-link>
+    <router-link to="/countries-create" class="btn btn-success" id="color">Agregar</router-link>
     <center><ul id="country-list" v-if="countries != null">
     <div v-for="(country, key) in countries" :key="key" id="country">
         <h4>{{country.name}}</h4>
@@ -99,16 +102,13 @@ export default {
 </script>
 <style lang="scss">
   #country-list{
-    padding:5px;
-
       div{
         position: center;
         margin-top:10px;
-        width:30%;
+        width:75%;
         height:10%;
-        border:1px solid #ddd;
-        background:#eee;
-        padding:20px;
+        border:1px solid #D1DBBD;
+        background:#D1DBBD;
         overflow:hiden;
       }
   }
@@ -117,5 +117,12 @@ export default {
   }
   .disable-modal{
     display: none!important;
+  }
+  #color {
+    background-color:#91AA9D;
+    border:#91AA9D;
+  }
+  .size {
+    width: 50%;
   }
 </style>

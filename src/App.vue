@@ -1,8 +1,5 @@
 <template>
   <div id="app">
-    <!--
-    <img src="./assets/logo.png">
-    -->
     <nav  v-if="getCookie()" class="navbar navbar-expand-lg navbar-light bg-light">
       <router-link class="navbar-brand" to="/countries">Inicio</router-link>
       <button class="navbar-toggler" type="button" @click="openMenu()">
@@ -61,6 +58,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
+  body {
+    background-color:#3E606F;
+  }
 </style>
